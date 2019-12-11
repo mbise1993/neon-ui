@@ -10,11 +10,11 @@ export interface ButtonOptions {
 
 const defaultOptions: ButtonOptions = {};
 
-export class Button extends UiElement<'div'> {
+export class Button extends UiElement<'button'> {
   public static readonly Class = 'neon-button';
 
   constructor(options?: ButtonOptions) {
-    super('div');
+    super('button');
 
     this.addClass(Button.Class);
 

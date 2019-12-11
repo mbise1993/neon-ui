@@ -1,4 +1,4 @@
-import {storiesOf} from '@storybook/html';
+import { storiesOf } from '@storybook/html';
 
 import { Button } from './Button';
 

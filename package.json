@@ -8,10 +8,15 @@
     "url": "https://github.com/mbise1993/neon-ui"
   },
   "scripts": {
-    "build": "tsc",
-    "storybook": "start-storybook -p 6006",
-    "test": "jest --watch",
-    "build-storybook": "build-storybook"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "build:dev": "tsc",
+    "build:storybook": "build-storybook",
+    "format": "prettier --check 'src/**/*.?(ts|tsx)'",
+    "format:fix": "npx run format -- --write",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "lint:fix": "npm run lint -- --fix",
+    "start:storybook": "start-storybook -p 6006",
+    "test": "jest --watch"
   },
   "dependencies": {},
   "devDependencies": {
