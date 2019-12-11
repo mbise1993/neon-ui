@@ -2,14 +2,17 @@
   "name": "neon-ui",
   "version": "1.0.0",
   "description": "Imperative UI framework for Javascript",
+  "author": "Matt Bise",
+  "license": "ISC",
+  "repository": {
+    "url": "https://github.com/mbise1993/neon-ui"
+  },
   "scripts": {
     "build": "tsc",
     "storybook": "start-storybook -p 6006",
     "test": "jest --watch",
     "build-storybook": "build-storybook"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {},
   "devDependencies": {
     "@storybook/addon-info": "^5.1.11",
