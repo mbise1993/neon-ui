@@ -1,0 +1,9 @@
+.neon-button {
+  padding: 8px;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
