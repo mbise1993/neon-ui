@@ -1,6 +1,8 @@
-import UiElement from '../UiElement';
+import { IUiElement, UiElement } from '../UiElement';
 
 import './Button.css';
+
+export interface IButton extends IUiElement {}
 
 export interface ButtonOptions {
   height?: number;
@@ -10,19 +12,19 @@ export interface ButtonOptions {
 
 const defaultOptions: ButtonOptions = {};
 
-export class Button extends UiElement<'button'> {
-  public static readonly Class = 'neon-button';
+export class Button extends UiElement implements IButton {
+  public static readonly className = 'neon-button';
 
   constructor(options?: ButtonOptions) {
     super('button');
 
-    this.addClass(Button.Class);
+    this.addClass(Button.className);
 
     options = { ...defaultOptions, ...options };
     this.setStyle({
       flex: options.stretch ? '1' : '0',
       height: options.height ? `${options.height}px` : 'auto',
-      width: options.width ? `${options.width}px` : 'auto',
+      width: options.width ? `${options.width}px` : 'auto'
     });
   }
 }

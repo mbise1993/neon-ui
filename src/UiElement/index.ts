@@ -1,1 +1,1 @@
-export { UiElement as default } from './UiElement';
+export * from './UiElement';

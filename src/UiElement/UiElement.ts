@@ -1,55 +1,84 @@
-export class UiElement<TTagName extends keyof HTMLElementTagNameMap> {
-  private element: HTMLElementTagNameMap[TTagName];
+export interface IUiElement {
+  getHtmlElement(): HTMLElement;
+  getParent(): IUiElement | undefined;
+  setParent(element: IUiElement): UiElement;
+  destroy(): void;
+  getChildren(): IUiElement[];
+  addChild(...elements: IUiElement[]): UiElement;
+  setText(text: string): UiElement;
+  addClass(...classes: string[]): UiElement;
+  removeClass(...classes: string[]): UiElement;
+  setStyle(style: Partial<CSSStyleDeclaration>): UiElement;
+  onClick(handle: (e: MouseEvent) => void): UiElement;
+  onHover(handle: (e: MouseEvent) => void): UiElement;
+}
 
-  constructor(tagName: TTagName) {
-    this.element = document.createElement(tagName);
+export class UiElement implements IUiElement {
+  private htmlElement: HTMLElement;
+  private parent?: IUiElement;
+  private children: IUiElement[] = [];
+
+  constructor(tagName: keyof HTMLElementTagNameMap) {
+    this.htmlElement = document.createElement(tagName);
   }
 
   public getHtmlElement() {
-    return this.element;
+    return this.htmlElement;
   }
 
-  public mount(parent: Node) {
-    parent.appendChild(this.element);
+  public getParent() {
+    return this.parent;
+  }
+
+  public setParent(element: IUiElement) {
+    element.getHtmlElement().append(this.htmlElement);
     return this;
   }
 
   public destroy() {
-    this.element.remove();
+    this.htmlElement.remove();
   }
 
-  public setContent(content: HTMLElement | string | number) {
-    if (content instanceof HTMLElement) {
-      this.element.appendChild(content);
-    } else {
-      this.element.innerText = content.toString();
-    }
+  public getChildren() {
+    return this.children;
+  }
+
+  public addChild(...elements: IUiElement[]) {
+    elements.forEach(element => {
+      this.children.push(element);
+      this.htmlElement.append(element.getHtmlElement());
+    });
 
     return this;
   }
 
-  public addClass(classname: string) {
-    this.element.classList.add(classname);
+  public setText(text: string) {
+    this.htmlElement.innerText = text;
     return this;
   }
 
-  public removeClass(classname: string) {
-    this.element.classList.remove(classname);
+  public addClass(...classes: string[]) {
+    this.htmlElement.classList.add(...classes);
+    return this;
+  }
+
+  public removeClass(...classes: string[]) {
+    this.htmlElement.classList.remove(...classes);
     return this;
   }
 
   public setStyle(style: Partial<CSSStyleDeclaration>) {
-    this.element.setAttribute('style', JSON.stringify(style));
+    this.htmlElement.setAttribute('style', JSON.stringify(style));
     return this;
   }
 
   public onClick(handler: (e: MouseEvent) => void) {
-    this.element.addEventListener('onclick', handler as any);
+    this.htmlElement.addEventListener('onclick', handler as any);
     return this;
   }
 
   public onHover(handler: (e: MouseEvent) => void) {
-    this.element.addEventListener('onmouseover', handler as any);
+    this.htmlElement.addEventListener('onmouseover', handler as any);
     return this;
   }
 }
